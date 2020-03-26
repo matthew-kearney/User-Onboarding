@@ -25,7 +25,14 @@ button {
 }
 `;
 
-
+const inputChange = e => {
+    e.persist();
+    const newFormData = {
+      ...useState,
+      [e.target.name]:
+        e.target.type === "checkbox" ? e.target.checked : e.target.value
+    };
+}
 
 const FormCard = ({values, touched, errors, status}) => {
     const [users, setUsers] = useState ([]);
@@ -93,6 +100,18 @@ const FormCard = ({values, touched, errors, status}) => {
 
         <button type="submit">Submit!</button>
 
+<br/>
+        <label htmlFor='terms' className='terms'>
+        <input
+          type='checkbox'
+          name='terms'
+          checked={useState.terms}
+          onChange={inputChange}
+        />
+        Terms & Conditions
+      </label>
+
+
     </Form>
 
     <pre>{JSON.stringify(values, null, 2)}</pre>
@@ -131,7 +150,4 @@ const FormikUserForm = withFormik({
         })
     }
 })(FormCard);
-
-export default FormikUserForm; 
-
- 
+export default FormikUserForm;
